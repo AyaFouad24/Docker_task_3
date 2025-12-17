@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # MongoDB Service
+  mongo:
+    image: mongo:7.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: mydb
+    networks:
+      - app-network
+
+  # Node.js Express App Service
+  app:
+    build: .
+    container_name: express-app
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      # Volume للـ hot reload - أي تغيير في الكود هيظهر فورًا
+      - .:/app
+      # استثناء node_modules من الـ volume
+      - /app/node_modules
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/mydb
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+# Networks
+networks:
+  app-network:
+    driver: bridge
+
+# Volumes للحفاظ على بيانات MongoDB
+volumes:
+  mongo-data:
