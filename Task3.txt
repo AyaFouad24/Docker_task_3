@@ -1,0 +1,23 @@
+Aya Fouad Hafez Mosa Elnaggar
+section 7 
+Task 3 (big data)
+(docker commands)
+docker-compose build
+
+docker-compose up
+
+docker-compose up --build
+
+docker-compose down
+
+docker ps
+
+docker logs express-app
+
+docker exec -it express-app sh
+
+docker-compose up -d
+
+docker-compose restart
+
+docker-compose down -v
